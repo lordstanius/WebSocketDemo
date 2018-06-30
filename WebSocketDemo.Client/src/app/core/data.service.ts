@@ -11,23 +11,23 @@ export class DataService {
   getQuotes(): Observable<number> {
     this.socket = new WebSocket('ws://localhost:57646/api/connection/1234');
     this.socket.onopen = () => {
-      this.socket.onmessage = this.handleMessage;
-      this.socket.onerror = this.handleError;
+      this.socket.onmessage = this.messageHandler.bind(this);
+      this.socket.onerror = this.errorHandler.bind(this);
+      this.socket.onclose = this.closeHandler.bind(this);
     };
 
     return new Observable<number>(subscriber => this.observer = subscriber);
   }
 
-  private handleMessage(event: MessageEvent) {
+  private messageHandler(event: MessageEvent) {
     this.observer.next(event.data);
   }
 
-  private handleError(error) {
-    console.error('server error:', error);
-    if (error.error instanceof Error) {
-      const errMessage = error.error.message;
-      return Observable.throw(errMessage);
-    }
-    return Observable.throw(error || 'Server error');
+  private errorHandler() {
+    Observable.throw('WebSocket error');
+  }
+
+  private closeHandler(event: CloseEvent) {
+    Observable.throw(`WebSocket closed: ${event.reason} (${event.code})`);
   }
 }
