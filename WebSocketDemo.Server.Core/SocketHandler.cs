@@ -9,9 +9,7 @@ namespace WebSocketDemo
 {
     public class SocketHandler : WebSocketHandler
     {
-        public SocketHandler(WebSocketConnectionManager webSocketConnectionManager): base(webSocketConnectionManager)
-        {
-        }
+        public SocketHandler(WebSocketConnectionManager webSocketConnectionManager) : base(webSocketConnectionManager) { }
 
         public override Task OnConnected(WebSocket socket)
         {
