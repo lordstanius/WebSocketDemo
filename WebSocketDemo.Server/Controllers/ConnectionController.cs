@@ -13,7 +13,7 @@ namespace WebSocketDemo.Controllers
             var context = HttpContext.Current;
             if (context.IsWebSocketRequest || context.IsWebSocketRequestUpgrading)
             {
-                context.AcceptWebSocketRequest(new SocketServer(id));
+                context.AcceptWebSocketRequest(new SocketHandler(id));
                 return Request.CreateResponse(HttpStatusCode.SwitchingProtocols);
             }
 

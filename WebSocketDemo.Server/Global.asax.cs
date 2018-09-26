@@ -18,7 +18,7 @@ namespace WebSocketDemo
                 while (true)
                 {
                     string quote = (rand.NextDouble() * 100.0).ToString("#.##");
-                    SocketServer.SendMessage(quote);
+                    SocketHandler.SendMessage(quote);
                     Thread.Sleep(2000);
                 }
             });

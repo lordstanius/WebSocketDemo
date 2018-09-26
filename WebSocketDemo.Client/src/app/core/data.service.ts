@@ -9,7 +9,8 @@ export class DataService {
   observer: Observer<number>;
 
   getQuotes(): Observable<number> {
-    this.socket = new WebSocket('ws://localhost:57646/api/connection/1234');
+    // this.socket = new WebSocket('ws://localhost:57646/api/connection/1234'); // for ASP.Net
+    this.socket = new WebSocket('ws://localhost:55431/connection'); // for ASP.Net Core
     this.socket.onopen = () => {
       this.socket.onmessage = this.messageHandler.bind(this);
       this.socket.onerror = this.errorHandler.bind(this);

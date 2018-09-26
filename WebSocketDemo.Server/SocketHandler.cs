@@ -2,12 +2,12 @@
 
 namespace WebSocketDemo
 {
-    public class SocketServer : WebSocketHandler
+    public class SocketHandler : WebSocketHandler
     {
         private static readonly WebSocketCollection Sockets = new WebSocketCollection();
         private readonly string _sessionId;
 
-        public SocketServer(string sessionId)
+        public SocketHandler(string sessionId)
         {
             _sessionId = sessionId;
         }
