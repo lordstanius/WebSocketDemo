@@ -1,38 +1,36 @@
 ﻿using System;
-using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using WebSocketManager;
-using WebSocketManager.Common;
 
 namespace WebSocketDemo
 {
     public class SocketHandler : WebSocketHandler
     {
-        public SocketHandler(WebSocketConnectionManager webSocketConnectionManager) : base(webSocketConnectionManager) { }
-
-        public override Task OnConnected(WebSocket socket)
+        public override void OnOpened(Socket socket)
         {
-            System.Diagnostics.Debug.WriteLine("Connected socket: " + WebSocketConnectionManager.GetId(socket));
+            Console.WriteLine("Connected socket: " + socket.ID);
 
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 var rand = new Random(Environment.TickCount);
                 while (true)
                 {
                     string quote = (rand.NextDouble() * 100.0).ToString("0.00");
-                    SendMessageAsync(socket, new Message { Data = quote, MessageType = MessageType.Text });
-                    Thread.Sleep(2000);
+                    await socket.SendMessageAsync(quote);
+                    Thread.Sleep(1000);
                 }
             });
-
-            return base.OnConnected(socket);
         }
 
-        public override Task OnDisconnected(WebSocket socket)
+        public override void OnClosed(Socket socket)
         {
-            System.Diagnostics.Debug.WriteLine("Socket closed: " + WebSocketConnectionManager.GetId(socket));
-            return base.OnDisconnected(socket);
+            Console.WriteLine("Socket closed: " + socket.ID);
+        }
+
+        public override void OnMessage(Socket socket, string message)
+        {
+            Console.WriteLine("Message from client: " + message);
         }
     }
 }

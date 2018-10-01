@@ -20,6 +20,10 @@ export class AppComponent implements OnInit, OnDestroy {
       });
   }
 
+  sendMessage(message: string) {
+    this.dataService.socket.send(message);
+  }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

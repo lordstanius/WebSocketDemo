@@ -2,3 +2,5 @@
 <br />
 <h2>Quote: {{ stockQuote }}</h2>
 <br />
+<input #message type="text"/>
+<button type="button" (click)="sendMessage(message.value)">Reply</button>
