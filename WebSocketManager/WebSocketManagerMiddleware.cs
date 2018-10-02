@@ -1,6 +1,3 @@
-using System;
-using System.Net.WebSockets;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
@@ -23,11 +20,9 @@ namespace WebSocketManager
                 return;
 
             var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-            var socket = new Socket(_webSocketHandler, webSocket);
-            _webSocketHandler.Add(socket);
+            var socket = new WebSocketExt(_webSocketHandler, webSocket);
 
-            while (webSocket.State == WebSocketState.Open)
-                await socket.ReceiveAsync();
+            await socket.StartReceiving();
 
             //TODO: Investigate the Kestrel exception thrown when this is the last middleware
             //await _next.Invoke(context);

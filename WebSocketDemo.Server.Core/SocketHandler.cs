@@ -7,7 +7,7 @@ namespace WebSocketDemo
 {
     public class SocketHandler : WebSocketHandler
     {
-        public override void OnOpened(Socket socket)
+        public override void OnOpened(WebSocketExt socket)
         {
             Console.WriteLine("Connected socket: " + socket.ID);
 
@@ -17,18 +17,18 @@ namespace WebSocketDemo
                 while (true)
                 {
                     string quote = (rand.NextDouble() * 100.0).ToString("0.00");
-                    await socket.SendMessageAsync(quote);
+                    await socket.SendAsync(quote);
                     Thread.Sleep(1000);
                 }
             });
         }
 
-        public override void OnClosed(Socket socket)
+        public override void OnClosed(WebSocketExt socket)
         {
             Console.WriteLine("Socket closed: " + socket.ID);
         }
 
-        public override void OnMessage(Socket socket, string message)
+        public override void OnMessage(WebSocketExt socket, string message)
         {
             Console.WriteLine("Message from client: " + message);
         }

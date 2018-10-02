@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace WebSocketManager
 {
-    public static class Extensions
+    public static class WebSocketManagerExtensions
     {
         public static IApplicationBuilder MapWebSocketManager(this IApplicationBuilder app, PathString path, WebSocketHandler handler)
         {
