@@ -6,27 +6,27 @@ namespace WebSocketManager
 {
     public abstract class WebSocketHandler
     {
-        private readonly ConcurrentDictionary<string, WebSocketExt> _sockets = new ConcurrentDictionary<string, WebSocketExt>();
+        private readonly ConcurrentDictionary<string, WebSocketConnection> _sockets = new ConcurrentDictionary<string, WebSocketConnection>();
 
-        public virtual void OnOpened(WebSocketExt socket) { }
-        public virtual void OnClosed(WebSocketExt socket) { }
-        public virtual void OnMessage(WebSocketExt socket, string message) { }
-        public virtual void OnMessage(WebSocketExt socket, ArraySegment<byte> bytes) { }
+        public virtual void OnOpened(WebSocketConnection socket) { }
+        public virtual void OnClosed(WebSocketConnection socket) { }
+        public virtual void OnMessage(WebSocketConnection socket, string message) { }
+        public virtual void OnMessage(WebSocketConnection socket, ArraySegment<byte> bytes) { }
 
-        internal void Add(WebSocketExt socket)
+        internal void Add(WebSocketConnection socket)
         {
             _sockets.TryAdd(socket.ID, socket);
             OnOpened(socket);
         }
 
-        public void Close(WebSocketExt socket)
+        public void Close(WebSocketConnection socket)
         {
             CloseAsync(socket).Wait();
         }
 
-        public async Task CloseAsync(WebSocketExt socket)
+        public async Task CloseAsync(WebSocketConnection socket)
         {
-            _sockets.TryRemove(socket.ID, out WebSocketExt throwAwayValue);
+            _sockets.TryRemove(socket.ID, out WebSocketConnection throwAwayValue);
 
             await socket.CloseAsync();
         }

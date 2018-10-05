@@ -7,7 +7,7 @@ namespace WebSocketDemo
 {
     public class SocketHandler : WebSocketHandler
     {
-        public override void OnOpened(WebSocketExt socket)
+        public override void OnOpened(WebSocketConnection socket)
         {
             Console.WriteLine("Connected socket: " + socket.ID);
 
@@ -23,12 +23,12 @@ namespace WebSocketDemo
             });
         }
 
-        public override void OnClosed(WebSocketExt socket)
+        public override void OnClosed(WebSocketConnection socket)
         {
             Console.WriteLine("Socket closed: " + socket.ID);
         }
 
-        public override void OnMessage(WebSocketExt socket, string message)
+        public override void OnMessage(WebSocketConnection socket, string message)
         {
             Console.WriteLine("Message from client: " + message);
         }

@@ -20,7 +20,7 @@ namespace WebSocketManager
                 return;
 
             var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-            var socket = new WebSocketExt(_webSocketHandler, webSocket);
+            var socket = new WebSocketConnection(_webSocketHandler, webSocket);
 
             await socket.StartReceiving();
 

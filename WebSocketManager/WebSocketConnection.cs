@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace WebSocketManager
 {
-    public class WebSocketExt
+    public class WebSocketConnection
     {
         private readonly WebSocket _socket;
         private readonly WebSocketHandler _handler;
         private readonly byte[] _buffer = new byte[1024];
 
-        internal WebSocketExt(WebSocketHandler handler, WebSocket socket)
+        internal WebSocketConnection(WebSocketHandler handler, WebSocket socket)
         {
             ID = Guid.NewGuid().ToString();
             _socket = socket;
