@@ -5,12 +5,10 @@ namespace WebSocketManager
 {
     public class WebSocketManagerMiddleware
     {
-        private readonly RequestDelegate _next;
         private WebSocketHandler _webSocketHandler { get; set; }
 
-        public WebSocketManagerMiddleware(RequestDelegate next, WebSocketHandler webSocketHandler)
+        public WebSocketManagerMiddleware(RequestDelegate _, WebSocketHandler webSocketHandler)
         {
-            _next = next;
             _webSocketHandler = webSocketHandler;
         }
 
@@ -23,9 +21,6 @@ namespace WebSocketManager
             var socket = new WebSocketConnection(_webSocketHandler, webSocket);
 
             await socket.StartReceiving();
-
-            //TODO: Investigate the Kestrel exception thrown when this is the last middleware
-            //await _next.Invoke(context);
         }
     }
 }
