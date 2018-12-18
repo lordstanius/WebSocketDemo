@@ -58,7 +58,7 @@ namespace WebSocketManager
             switch (result.MessageType)
             {
                 case WebSocketMessageType.Text:
-                    string message = Encoding.UTF8.GetString(buffer.Array, 0, result.Count);
+                    string message = Encoding.UTF8.GetString(buffer.Array);
                     _handler.OnMessage(this, message);
                     break;
                 case WebSocketMessageType.Binary:
