@@ -35,7 +35,7 @@ namespace WebSocketManager
             var result = await _socket.ReceiveAsync(buffer, CancellationToken.None);
             if (result.EndOfMessage)
             {
-                PassMessageToHandler(result, buffer);
+                PassMessageToHandler(result, new ArraySegment<byte>(buffer.Array, 0, result.Count));
                 return;
             }
 
@@ -58,7 +58,7 @@ namespace WebSocketManager
             switch (result.MessageType)
             {
                 case WebSocketMessageType.Text:
-                    string message = Encoding.UTF8.GetString(buffer.Array);
+                    string message = Encoding.UTF8.GetString(buffer.Array, 0, buffer.Count);
                     _handler.OnMessage(this, message);
                     break;
                 case WebSocketMessageType.Binary:
