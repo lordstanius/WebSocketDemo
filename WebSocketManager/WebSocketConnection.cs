@@ -45,7 +45,7 @@ namespace WebSocketManager
                 while (!result.EndOfMessage)
                 {
                     result = await _socket.ReceiveAsync(buffer, CancellationToken.None);
-                    stream.Write(buffer.Array, 0, result.Count);
+                    stream.Write(buffer.Array, buffer.Offset, result.Count);
                 }
 
                 if (stream.TryGetBuffer(out ArraySegment<byte> bytes))
@@ -58,7 +58,7 @@ namespace WebSocketManager
             switch (result.MessageType)
             {
                 case WebSocketMessageType.Text:
-                    string message = Encoding.UTF8.GetString(buffer.Array, 0, buffer.Count);
+                    string message = Encoding.UTF8.GetString(buffer.Array, buffer.Offset, buffer.Count);
                     _handler.OnMessage(this, message);
                     break;
                 case WebSocketMessageType.Binary:
